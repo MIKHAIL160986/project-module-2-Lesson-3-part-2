@@ -10,6 +10,7 @@ import { ConfirmDialog } from './components/ConfirmDialog'
 import { EditParticipantModal } from './components/EditParticipantModal'
 import { computeAllParticipants } from './utils/participantLogic'
 import { exportToCsv, importFromCsv, importFromJson } from './utils/csv'
+import { exportToExcelBlob } from './utils/excelExport'
 import type { ParticipantComputed, Payment } from './types'
 
 type DeleteTarget =
@@ -69,6 +70,16 @@ export function App() {
     const a = document.createElement('a')
     a.href = url
     a.download = `сбор-участники-${new Date().toISOString().slice(0, 10)}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  const handleExportExcel = () => {
+    const blob = exportToExcelBlob(data)
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `сбор-${new Date().toISOString().slice(0, 10)}.xlsx`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -173,6 +184,13 @@ export function App() {
               className="rounded-xl bg-slate-800 px-3 py-2 text-sm font-medium text-white hover:bg-slate-900"
             >
               Экспорт CSV
+            </button>
+            <button
+              type="button"
+              onClick={handleExportExcel}
+              className="rounded-xl bg-green-700 px-3 py-2 text-sm font-medium text-white hover:bg-green-800"
+            >
+              Экспорт Excel
             </button>
             <button
               type="button"
