@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Учёт сбора средств</title>
+    <script>
+      ;(function () {
+        try {
+          if (/\.github\.io$/i.test(location.hostname || '')) {
+            var segs = location.pathname.replace(/^\/+|\/+$/g, '').split('/').filter(Boolean)
+            if (segs[1] === 'preview') return
+            var basePath = segs.length ? '/' + segs[0] + '/' : '/'
+            location.replace(location.origin + basePath + 'preview/index.html')
+            return
+          }
+          location.replace('./preview/index.html')
+        } catch (e) {}
+      })()
+    </script>
+  </head>
+  <body>
+    <p>
+      Перейдите к
+      <a href="./preview/index.html">рабочей версии приложения</a>
+      или
+      <a href="./">на главную страницу сайта</a>.
+    </p>
+  </body>
+</html>
