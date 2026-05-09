@@ -13,6 +13,19 @@
             if (u.indexOf('preview/index.html') === -1) {
               location.replace(new URL('preview/index.html', location.href).href)
             }
+            return
+          }
+          // GitHub Pages: корневой index — для Vite dev, а не для хостинга; иначе /src/main.tsx даёт белый экран
+          if (/\.github\.io$/i.test(location.hostname || '')) {
+            if (location.pathname.indexOf('/preview/') !== -1) return
+            var path = location.pathname
+            var root = path
+            if (/\/index\.html$/i.test(root) || /\/index$/i.test(root)) {
+              root = root.replace(/\/index\.html?$/i, '/')
+            } else if (root.slice(-1) !== '/') {
+              root = root + '/'
+            }
+            location.replace(location.origin + root + 'preview/index.html')
           }
         } catch (e) {}
       })()
