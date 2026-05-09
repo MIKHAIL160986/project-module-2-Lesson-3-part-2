@@ -4,28 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Учёт сбора средств</title>
-    <!-- При открытии папки с диска (двойной щелчок по index.html) ведём на собранное приложение -->
+    <!-- При двойном щелчке по index.html с диска ведём в docs/index.html (после npm run build) -->
     <script>
       ;(function () {
         try {
           if (location.protocol === 'file:') {
             var u = location.href.replace(/\\/g, '/')
-            if (u.indexOf('preview/index.html') === -1) {
-              location.replace(new URL('preview/index.html', location.href).href)
+            if (u.indexOf('docs/index.html') === -1) {
+              location.replace(new URL('docs/index.html', location.href).href)
             }
-            return
-          }
-          // GitHub Pages: корневой index — для Vite dev, а не для хостинга; иначе /src/main.tsx даёт белый экран
-          if (/\.github\.io$/i.test(location.hostname || '')) {
-            if (location.pathname.indexOf('/preview/') !== -1) return
-            var path = location.pathname
-            var root = path
-            if (/\/index\.html$/i.test(root) || /\/index$/i.test(root)) {
-              root = root.replace(/\/index\.html?$/i, '/')
-            } else if (root.slice(-1) !== '/') {
-              root = root + '/'
-            }
-            location.replace(location.origin + root + 'preview/index.html')
           }
         } catch (e) {}
       })()
